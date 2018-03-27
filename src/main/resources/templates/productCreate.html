@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+	<title>Create Product </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+ 
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen" />
+ 
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+ 
+    <link href="../static/css/main.css"
+          th:href="@{css/main.css}" rel="stylesheet" media="screen"/>
+</head>
+<body>
+
+<div class="container">
+
+	<h2> Online Product Store</h2>  
+	<div th:fragment="header">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#" th:href="@{/}">Home</a>
+                    <ul class="nav navbar-nav">
+                        <li><a href="#" th:href="@{/products}">Product List</a></li>
+                        <li><a href="#" th:href="@{/productCreate}">Create Product</a></li>
+                    </ul>
+ 
+                </div>
+            </div>
+        </nav>
+     </div>  
+</div>
+
+<div class="container">
+
+  <h3>Enter Product Details</h3>
+    <div>
+        <form class="form-horizontal" th:object="${product}" th:action="@{/products}" th:method="post">
+            <input type="hidden" th:field="*{productId}"/>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Product Name </label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" th:field="*{productName}"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Description:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" th:field="*{productDescription}"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Related Product:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" th:field="*{relatedProduct}"/>
+                </div>
+            </div>
+            <!-- <div class="form-group">
+                <label class="col-sm-2 control-label">Image Url:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" th:field="*{imageUrl}"/>
+                </div>
+            </div> -->
+            <div class="row">
+                <button type="submit" class="btn btn-default">Submit</button>
+            </div>
+        </form>
+    </div>
+    
+</div>
+
+
+</body>
+</html>
