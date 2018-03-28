@@ -32,23 +32,22 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="/{productId}", method=RequestMethod.GET)
-	@ResponseBody Product getProductById(@PathVariable String productId) {
-		return productService.getProductById(productId);
+	public ModelAndView getProductById(@PathVariable String productId, ModelMap model) {
+		Product product = productService.getProductById(productId);
+		model.put("product", product);
+		return new ModelAndView("productUpdate", model);
 	}
 
 	@RequestMapping(value="", method=RequestMethod.POST)
 	public String saveProduct(@ModelAttribute Product product) {
 		productService.saveProduct(product);
-		
 		return "redirect:/products";
 	}
 	
 	@RequestMapping(value="", method=RequestMethod.PUT)
-	public ModelAndView updateProduct(@RequestBody Product product, ModelMap model) {
+	public String updateProduct(@ModelAttribute Product product, ModelMap model) {
 		productService.updateProduct(product);
-		product.setProductName(product.getProductName()+1);
-		model.put("msg", "Product Deleted successfully");
-		return new ModelAndView("redirect:/products", model);
+		return "redirect:/products";
 	}
 
 	@RequestMapping(value="/{productId}", method=RequestMethod.DELETE)

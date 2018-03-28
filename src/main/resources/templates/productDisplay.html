@@ -54,7 +54,7 @@
                 <td th:text="${product.productDescription}">Product Descirption</td>
                 <td th:text="${product.relatedProduct}">Related Product</td>
                 <td> 
-                   <form th:method="POST" th:action="@{/products}" th:object="${product}">
+                   <form th:method="GET" th:action="@{/products/__${product.productId}__}">
                      <button type="submit" name="submit" value="value" class="link-button">Update</button>
                    </form>
                 </td>   

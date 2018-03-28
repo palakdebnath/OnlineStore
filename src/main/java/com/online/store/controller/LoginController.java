@@ -12,31 +12,16 @@ import com.online.store.service.LoginService;
 
 @Controller
 public class LoginController {
+	
 	@Autowired
 	private LoginService loginService;
 	
-	@RequestMapping(value="/", method=RequestMethod.GET)
-    public String index(ModelMap model) {
-        return "index";
-    }
-	
-	@RequestMapping(value="/productDisplay", method=RequestMethod.GET)
-	    public String productDisplay(ModelMap model) {
-	        return "productDisplay";
-	}
-	
-	@RequestMapping(value="/productCreate", method=RequestMethod.GET)
-    public String productCreate(ModelMap model) {
-		Product product = new Product();
-		model.put("product", product);
-        return "productCreate";
-    }
-	
 	@RequestMapping(value="/login", method=RequestMethod.GET)
-    public String showLoginPage(ModelMap model) {
+    public String login() {
         return "login";
     }
-	
+    
+	/*	
 	@RequestMapping(value="/login", method=RequestMethod.POST)
     public String showLoginPage(ModelMap model, @RequestParam String userName, @RequestParam String password) {
 		
@@ -48,6 +33,6 @@ public class LoginController {
 		System.out.println("User: " + userName + "Login successfull...");
 		model.put("user", userName);
         return "redirect:/products";
-    }
+    }*/
 	
 }
