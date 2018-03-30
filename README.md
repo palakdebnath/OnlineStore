@@ -1,6 +1,6 @@
 # OnlineStore
 
-### Login Page: [2 users configured. admin/admin and user/user]
+### Login Page: [2 users configured in application.properties file. admin/admin and user/user]
 ![image](https://user-images.githubusercontent.com/1976767/38123580-7d78cb3e-33a1-11e8-9d7e-ec23e565ae98.png)
 
 
