@@ -1,73 +1,91 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head lang="en">
-	
-    <title>Product List</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
- 
-    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
-          th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
-          rel="stylesheet" media="screen" />
- 
-    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
-            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
- 
-    <!-- <link href="../static/css/main.css" th:href="@{css/main.css}" rel="stylesheet" media="screen"/> -->
 
+<title>Product List</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<link
+	href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+	rel="stylesheet" media="screen" />
+
+<script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+	th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+
+<link href="../static/css/main.css" th:href="@{css/main.css}"
+	rel="stylesheet" media="screen" />
 </head>
 <body>
-<div class="container">
+	<div class="container">
+		<form class="form-horizontal" th:action="@{/logout}" method="post">
+			<div class="form-group">
+				<div class="col-sm-10">
+					<h2>Online Product Store</h2>
+				</div>
+				<div class="col-sm-2" style="padding-top: 25px;">
+					<span sec:authorize="isAuthenticated()"> <input
+						type="submit" value="Sign Out" />
+					</span>
+				</div>
+			</div>
+		</form>
+		<div th:fragment="header">
+			<nav class="navbar navbar-default">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<a class="navbar-brand" href="#" th:href="@{/}">Home</a>
+						<ul class="nav navbar-nav">
+							<li><a href="#" th:href="@{/products}">Product List</a></li>
+							<li><a href="#" th:href="@{/productCreate}">Create Product</a></li>
+							<li><a href="#" th:href="@{/login}">Sign In</a></li>
+						</ul>
 
-	<h2> Online Product Store</h2>  
-	<div th:fragment="header">
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#" th:href="@{/}">Home</a>
-                    <ul class="nav navbar-nav">
-                        <li><a href="#" th:href="@{/products}">Product List</a></li>
-                        <li><a href="#" th:href="@{/productCreate}">Create Product</a></li>
-                    </ul>
- 
-                </div>
-            </div>
-        </nav>
-     </div>  
-</div>
+					</div>
+				</div>
+			</nav>
+		</div>
+		<h3>Product Details</h3>
 
-<div class="container">
-   <div th:if="${!products.isEmpty()}"> 
-        <h3>Product List</h3>
-        <table class="table table-striped">
-            <tr>
-                <th>Product Id</th>
-                <th>Product Name</th>
-                <th>Product Description</th>
-                <th>Related Product</th>
-                <th>Product Update</th>
-                <th>Product Delete</th>
-            </tr>
-            <tr th:each="product,it : ${products}">
-            
-                <td th:text="${product.productId}">Product Id</td>
-                <td th:text="${product.productName}">Product Name</td>
-                <td th:text="${product.productDescription}">Product Descirption</td>
-                <td th:text="${product.relatedProduct}">Related Product</td>
-                <td> 
-                   <form th:method="GET" th:action="@{/products/__${product.productId}__}">
-                     <button type="submit" name="submit" value="value" class="link-button">Update</button>
-                   </form>
-                </td>   
-                <td> 
-                   <form th:method="DELETE" th:action="@{/products/__${product.productId}__}">
-                     <button type="submit" name="submit" value="value" class="link-button">Delete</button>
-                   </form>
-                </td>   
-            </tr>
-        </table>
+		<div th:if="${!products.isEmpty()}">
+			<table class="table table-striped">
+				<tr>
+					<th>Product Id</th>
+					<th>Product Name</th>
+					<th>Product Description</th>
+					<th>Related Product</th>
+					<th sec:authorize="hasRole('ROLE_USER')">Product Update</th>
+					<th sec:authorize="hasRole('ROLE_USER')">Product Delete</th>
+				</tr>
+				<tr th:each="product,it : ${products}">
 
-    </div> 
-</div> 
+					<td th:text="${product.productId}">Product Id</td>
+					<td th:text="${product.productName}">Product Name</td>
+					<td th:text="${product.productDescription}">Product
+						Descirption</td>
+					<td th:text="${product.relatedProduct}">Related Product</td>
+					<td sec:authorize="hasRole('ROLE_USER')">
+						<form th:method="GET"
+							th:action="@{/products/__${product.productId}__}">
+							<button sec:authorize="hasRole('ROLE_USER')" type="submit"
+								name="submit" value="value" class="link-button">Update</button>
+						</form>
+					</td>
+					<td sec:authorize="hasRole('ROLE_USER')">
+						<form th:method="DELETE"
+							th:action="@{/products/__${product.productId}__}">
+							<button sec:authorize="hasRole('ROLE_USER')" type="submit"
+								name="submit" value="value" class="link-button">Delete</button>
+						</form>
+					</td>
+				</tr>
+			</table>
 
+		</div>
+		<div th:unless="${!products.isEmpty()}">
+			<h5>No More Product in the list..</h5>
+		</div>
+	</div>
 </body>
 </html>
