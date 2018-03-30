@@ -9,6 +9,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+	@Autowired
+	private ConfigReader config;
+	
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
@@ -26,8 +29,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .inMemoryAuthentication()
-                .withUser("admin").password("admin").roles("ADMIN")
-                .and().withUser("user").password("user").roles("USER");;
+                .withUser(config.getAdminUserId()).password(config.getAdminPassword()).roles("ADMIN")
+                .and().withUser(config.getUserId()).password(config.getPassword()).roles("USER");;
     }
 
 }

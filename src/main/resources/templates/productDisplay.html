@@ -38,7 +38,7 @@
 						<a class="navbar-brand" href="#" th:href="@{/}">Home</a>
 						<ul class="nav navbar-nav">
 							<li><a href="#" th:href="@{/products}">Product List</a></li>
-							<li><a href="#" th:href="@{/productCreate}">Create Product</a></li>
+							<li><a href="#" th:href="@{/productCreate}" sec:authorize="hasRole('ROLE_ADMIN')">Create Product</a></li>
 							<li><a href="#" th:href="@{/login}">Sign In</a></li>
 						</ul>
 
@@ -55,8 +55,8 @@
 					<th>Product Name</th>
 					<th>Product Description</th>
 					<th>Related Product</th>
-					<th sec:authorize="hasRole('ROLE_USER')">Product Update</th>
-					<th sec:authorize="hasRole('ROLE_USER')">Product Delete</th>
+					<th sec:authorize="hasRole('ROLE_ADMIN')">Product Update</th>
+					<th sec:authorize="hasRole('ROLE_ADMIN')">Product Delete</th>
 				</tr>
 				<tr th:each="product,it : ${products}">
 
@@ -65,17 +65,17 @@
 					<td th:text="${product.productDescription}">Product
 						Descirption</td>
 					<td th:text="${product.relatedProduct}">Related Product</td>
-					<td sec:authorize="hasRole('ROLE_USER')">
+					<td sec:authorize="hasRole('ROLE_ADMIN')">
 						<form th:method="GET"
 							th:action="@{/products/__${product.productId}__}">
-							<button sec:authorize="hasRole('ROLE_USER')" type="submit"
+							<button sec:authorize="hasRole('ROLE_ADMIN')" type="submit"
 								name="submit" value="value" class="link-button">Update</button>
 						</form>
 					</td>
-					<td sec:authorize="hasRole('ROLE_USER')">
+					<td sec:authorize="hasRole('ROLE_ADMIN')">
 						<form th:method="DELETE"
 							th:action="@{/products/__${product.productId}__}">
-							<button sec:authorize="hasRole('ROLE_USER')" type="submit"
+							<button sec:authorize="hasRole('ROLE_ADMIN')" type="submit"
 								name="submit" value="value" class="link-button">Delete</button>
 						</form>
 					</td>
